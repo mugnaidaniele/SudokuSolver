@@ -1,17 +1,11 @@
 import numpy as np
 import time
 
+
 class Sudoku:
-    def __init__(self):
-        self.grid = np.asarray([[3, 0, 6, 5, 0, 8, 4, 0, 0],
-                                [5, 0, 0, 0, 0, 0, 0, 0, 0],
-                                [0, 0, 0, 0, 0, 0, 0, 0, 1],
-                                [0, 0, 3, 0, 1, 0, 0, 8, 0],
-                                [9, 0, 0, 8, 6, 3, 0, 0, 5],
-                                [0, 5, 0, 0, 9, 0, 6, 0, 0],
-                                [1, 3, 0, 0, 0, 0, 2, 0, 0],
-                                [0, 0, 0, 0, 0, 0, 0, 7, 4],
-                                [0, 0, 5, 2, 0, 6, 3, 0, 0]])
+
+    def __init__(self, grid):
+        self.grid = grid
 
     def is_solved(self):
         solved = True
@@ -66,19 +60,19 @@ class Sudoku:
         for row in range(0, len(self.grid)):
             for col in range(0, len(self.grid[0])):
                 if self.grid[row][col] == 0:
-                    to_fill = True # Cella Vuota
+                    to_fill = True  # Cella Vuota
                     break
-            if to_fill: # Interrompo double for, (col,row) indicano la cella selezionata
+            if to_fill:  # Interrompo double for, (col,row) indicano la cella selezionata
                 break
 
-        if not to_fill: # No Cella Vuota -> terminato
+        if not to_fill:  # No Cella Vuota -> terminato
             return True
-        for num in range(1, 10): #Cerco numero per la cella
+        for num in range(1, 10):  # Cerco numero per la cella
             if self.is_safe(row, col, num):
                 self.grid[row][col] = num
-                if self.solve(): #provo a risolvere nuovo sudoku aggiornato
+                if self.solve():  # provo a risolvere nuovo sudoku aggiornato
                     return True
-                self.grid[row][col] = 0 # se non riesco a risolverlo riassegno la cella vuota
+                self.grid[row][col] = 0  # se non riesco a risolverlo riassegno la cella vuota
         return False
 
     def solver(self):
